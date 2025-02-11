@@ -31,7 +31,7 @@ function App() {
 
   // Obtener todas las universidades
   useEffect(() => {
-    axios.get('https://backendappfhsp-production.up.railway.app/api/universidades')
+    axios.get('https://clever-dream-production.up.railway.app/api/universidades')
       .then(response => {
         setUniversidades(response.data.universidades);
       })
@@ -47,7 +47,7 @@ function App() {
         "contacto": nuevoContactoUnivesidad,
         "email": nuevoEmailUnivesidad
       };
-      await axios.post(`https://backendappfhsp-production.up.railway.app/api/universidades`, bodyData);
+      await axios.post(`https://clever-dream-production.up.railway.app/api/universidades`, bodyData);
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +55,7 @@ function App() {
 
   // Obtener documentos de la universidad seleccionada
   const getDocumentos = (id_universidad: string) => {
-    axios.get(`https://backendappfhsp-production.up.railway.app/api/universidades/documento/${id_universidad}`)
+    axios.get(`https://clever-dream-production.up.railway.app/api/universidades/documento/${id_universidad}`)
       .then(response => {
         setDocumentos(response.data.documentos);
         setSelectedUniversidad(id_universidad);
@@ -73,7 +73,7 @@ function App() {
     const formData = new FormData();
     formData.append('nombre_archivo', file);
     try {
-      await axios.post(`https://backendappfhsp-production.up.railway.app/api/universidades/documento/${id_universidad}`, formData, {
+      await axios.post(`https://clever-dream-production.up.railway.app/api/universidades/documento/${id_universidad}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
