@@ -17,6 +17,8 @@ interface Documento {
 }
 
 function App() {
+  //let URLAPI = "localhost:5050"
+  let URLAPI = "https://clever-dream-production.up.railway.app/api"
   const [universidades, setUniversidades] = useState<Universidad[]>([]);
   const [documentos, setDocumentos] = useState<Documento[]>([]);
   const [selectedUniversidad, setSelectedUniversidad] = useState<string | null>(null);
@@ -31,7 +33,7 @@ function App() {
 
   // Obtener todas las universidades
   useEffect(() => {
-    axios.get('https://clever-dream-production.up.railway.app/api/universidades')
+    axios.get(`${URLAPI}/api/universidades`)
       .then(response => {
         setUniversidades(response.data.universidades);
       })
@@ -47,7 +49,13 @@ function App() {
         "contacto": nuevoContactoUnivesidad,
         "email": nuevoEmailUnivesidad
       };
-      await axios.post(`https://clever-dream-production.up.railway.app/api/universidades`, bodyData);
+      const {data} = await axios.post(`${URLAPI}/universidades`, bodyData);
+      // Después de agregar la universidad, obtienes nuevamente todas las universidades
+      axios.get(`${URLAPI}/api/universidades`)
+      .then(response => {
+        setUniversidades(response.data.universidades);
+      })
+      .catch(error => console.error("Hubo un error al obtener las universidades", error));
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +63,7 @@ function App() {
 
   // Obtener documentos de la universidad seleccionada
   const getDocumentos = (id_universidad: string) => {
-    axios.get(`https://clever-dream-production.up.railway.app/api/universidades/documento/${id_universidad}`)
+    axios.get(`${URLAPI}/api/universidades/documento/${id_universidad}`)
       .then(response => {
         setDocumentos(response.data.documentos);
         setSelectedUniversidad(id_universidad);
@@ -73,7 +81,7 @@ function App() {
     const formData = new FormData();
     formData.append('nombre_archivo', file);
     try {
-      await axios.post(`https://clever-dream-production.up.railway.app/api/universidades/documento/${id_universidad}`, formData, {
+      await axios.post(`${URLAPI}/api/universidades/documento/${id_universidad}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
