@@ -18,7 +18,7 @@ interface Documento {
 
 function App() {
   //let URLAPI = "localhost:5050"
-  let URLAPI = "https://clever-dream-production.up.railway.app/api"
+  let URLAPI = "https://clever-dream-production.up.railway.app"
   const [universidades, setUniversidades] = useState<Universidad[]>([]);
   const [documentos, setDocumentos] = useState<Documento[]>([]);
   const [selectedUniversidad, setSelectedUniversidad] = useState<string | null>(null);
